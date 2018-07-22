@@ -2,7 +2,7 @@
   "name": "ktestapi",
   "version": "1.0.0",
   "description": "KTest API",
-  "main": "index.js",
+  "main": "api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
