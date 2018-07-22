@@ -10,7 +10,12 @@ secrets.apply(config);
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
+// Default endpoint
+app.get('/', (req, res) => {
+  res.json({"msg": "greetings."});
+});
+
 // start the server
 app.listen(config.serverPort, () => {
-  console.log('App listening on port ${config.serverPort}.');
+  console.log(`App listening on port ${config.serverPort}.`);
 });
