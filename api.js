@@ -10,6 +10,10 @@ secrets.apply(config);
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
+// attach routes.
+const routes = require('./api/assignments/routes')(config);
+routes.useRoutes(app);
+
 // Default endpoint
 app.get('/', (req, res) => {
   res.json({"msg": "greetings."});
