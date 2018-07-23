@@ -1,0 +1,19 @@
+version: '2'
+services:
+  db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    ports:
+      - 27017:27017
+      - 27018:27018
+  restserver:
+    build:
+      context: ./rest
+      dokcerfile: Dockerfile
+    image: restserver
+    ports: 
+      - 80:80
+    environment:
+      NODE_ENV: production
+      MONGO_URL: mongodb://db:27017
