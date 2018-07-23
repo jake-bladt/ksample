@@ -1,7 +1,7 @@
 const schema = require('./schema');
 
 module.exports = (config) => ({
-  getAssignment: (id) => undefined,
   createAssignment: (assignment) => undefined,
+  getAssignment: (id) => undefined,
   getAssignments: (tag) => undefined
 });
