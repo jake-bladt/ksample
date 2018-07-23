@@ -7,6 +7,19 @@ module.exports = (config) => {
   
   return {
     useRoutes: (app) => {
+      /**
+       * @api {get} /assignments/?tag=:tag
+       * @apiNmae GetAssignmentsByTag
+       * @apiGroup Assignment
+       * 
+       * @apiParam {String} tag Tag on assignment
+       * 
+       * @apiSuccess {String} name Name of the assignment.
+       * @apiSuccess {String} title Title of the assignment.
+       * @apiSuccess {String} description Description of the assignment.
+       * @apiSuccess {String} type Type of the assignment.
+       * @apiSuccess {[String]} tags Tags on the assignment.
+      */
       app.get('/assignments/', (req, res) => {
           const tag = req.params['tag'];
           if(tag) {
@@ -18,9 +31,22 @@ module.exports = (config) => {
           }
       });
   
-      app.get('/assignments/:id', (req, res) => {
+      /**
+       * @api {get} /assignments/:id
+       * @apiNmae GetAssignmentById
+       * @apiGroup Assignment
+       * 
+       * @apiParam {String} id ID of the assignment
+       * 
+       * @apiSuccess {String} name Name of the assignment.
+       * @apiSuccess {String} title Title of the assignment.
+       * @apiSuccess {String} description Description of the assignment.
+       * @apiSuccess {String} type Type of the assignment.
+       * @apiSuccess {[String]} tags Tags on the assignment.
+      */
+     app.get('/assignments/:id', (req, res) => {
         const id = req.params['id'];
-        action.getAssignment(id)
+        actions.getAssignment(id)
           .then((data) => {
             if(data) {
               res.json(data)
@@ -31,15 +57,32 @@ module.exports = (config) => {
           .catch((err) => res.status(500).send(err))
       });
   
-      app.post('/assignments', (req, res) => {
-        const newAssignment = {
-            name: req.params['name'],
-            title: req.params['title'],
-            description: req.params['description'],
-            type: req.params['type'],
-            duration: req.params['duration'],
-            tags: getTags(req.params['tags'])
-        }
+    /**
+     * @api {post} /assignments/
+     * @apiNmae CreateAssignment
+     * @apiGroup Assignment
+     * 
+     * @apiParam {String} name Name of the assignment.
+     * @apiParam {String} title Title of the assignment.
+     * @apiParam {String} description Description of the assignment.
+     * @apiParam {String} type Type of the assignment.
+     * @apiParam {[String]} tags Tags on the assignment.
+     * 
+     * @apiSuccees {String} id ID of the assignment
+    */
+    app.post('/assignments', (req, res) => {
+      const newAssignment = {
+        name: req.params['name'],
+        title: req.params['title'],
+        description: req.params['description'],
+        type: req.params['type'],
+        duration: req.params['duration'],
+        tags: getTags(req.params['tags'])
+      }
+
+      actions.createAssignment(newAssignment)
+        .then((assignment) => res.json({id: assignment.id}))
+        .catch((err) => res.status(500).send(err))
       });
     }
   }
